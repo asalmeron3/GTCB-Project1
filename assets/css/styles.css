@@ -1,1 +1,13 @@
 /*This is the css for styling "Marvel-out Face Match"*/
+
+h1{
+	text-align: center;
+	font-family: 'Bungee Shade', cursive;
+	font-size: 70px;
+}
+
+
+.container{
+	align-items: center;
+}
+
