@@ -41,16 +41,6 @@ $(document).ready(function() {
             url: comicURL,
             method: "GET"
         }).done(function(secondResponse) {
-            console.log(secondResponse);
-            var firstComicImage = secondResponse.data.results['0'].thumbnail.path;
-            console.log(firstComicImage);
-            var firstComicTitle = secondResponse.data.results['0'].title;
-            var secondComicImage = secondResponse.data.results['1'].thumbnail.path;
-            var secondComicTitle = secondResponse.data.results['1'].title;
-            var thirdComicImage = secondResponse.data.results['2'].thumbnail.path;
-            var thirdComicTitle = secondResponse.data.results['2'].title;
-            var fourthComicImage = secondResponse.data.results['3'].thumbnail.path;
-            var fourthComicTitle = secondResponse.data.results['3'].title;
 
             var innerDiv = $("<div>");
             var pTwo = $("<p>");
