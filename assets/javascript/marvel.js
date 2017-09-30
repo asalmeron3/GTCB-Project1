@@ -1,6 +1,6 @@
 // This is javascript related to Marvel API
-var apiKey = "4ca284a4ce90a4d302b4c5d0aa34bc15";
-var privateKey = "a9364c43108188a0d1fbeff389ab08e0ae2e9c36";
+var apiKey = config.PUBLIC_KEY;
+var privateKey = config.PRIVATE_KEY;
 var ts = moment.utc().format("x").toString();
 var passhash = CryptoJS.MD5(ts + privateKey + apiKey);
 console.log(ts);
