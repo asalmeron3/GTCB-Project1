@@ -18,24 +18,26 @@ firebase.initializeApp(config);
 $(document).ready(function() {
 
     var createDiv = $('<div class= "character">');
-    var queryURL = "https://gateway.marvel.com:443/v1/public/characters?name=Spider-Man&ts=" + ts + "&apikey=" + apiKey + "&hash=" + passhash + "&limit=5";
+    var queryURL = "https://gateway.marvel.com:443/v1/public/characters?name=Wasp&ts=" + ts + "&apikey=" + apiKey + "&hash=" + passhash + "&limit=5";
     $.ajax({
         url: queryURL,
         method: "GET"
     }).done(function(response) {
-        console.log(response);
+        //console.log(response);
         var name = response.data.results["0"].name;
         var thumbnail = response.data.results["0"].thumbnail.path;
         var story = response.data.results["0"].description;
         var comic = response.data.results["0"].comics.items["0"].name;
         var characterId = response.data.results["0"].id;
         var p = $("<p>");
-        p.append(name);
-        p.append(story);
-        var img = $("<img>").attr("src", thumbnail + ".jpg");
-        p.append(img);
-        createDiv.append(p);
-        $("body").append(createDiv);
+        //p.append(name);
+        //p.append(story);
+        //var img = $("<img>").attr("src", thumbnail + ".jpg");
+        //p.append(img);
+        //createDiv.append(p);
+        $("#character-name").html(name);
+        $("#background").html(story);
+        //$("body").append(createDiv);
         var comicURL = "https://gateway.marvel.com:443/v1/public/characters/" + characterId + "/comics?limit=4&ts=" + ts + "&apikey=" + apiKey + "&hash=" + passhash;
         $.ajax({
             url: comicURL,
@@ -46,7 +48,7 @@ $(document).ready(function() {
             var pTwo = $("<p>");
             for (var x = 0; x < 4; x++) {
                 var comicImage = secondResponse.data.results[x].thumbnail.path;
-                console.log(comicImage);
+                //console.log(comicImage);
                 var comicTitle = secondResponse.data.results[x].title;
                 var innerImg = $("<img>").attr("src", comicImage + ".jpg");
                 innerDiv.append(innerImg);
@@ -54,11 +56,11 @@ $(document).ready(function() {
                 innerDiv.append(p);
             }
 
-            createDiv.append(innerDiv);
+            $("#comic-images").append(innerDiv);
 
 
 
-            $("body").append(createDiv);
+            //$("body").append(createDiv);
 
         });
     });
