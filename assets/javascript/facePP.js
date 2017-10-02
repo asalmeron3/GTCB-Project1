@@ -20,40 +20,23 @@
 //___________________________________________________________//
 
 
-
-//----------------------Iniitialize Firebase----------------//
-		
-	//Willina: I will need the database config if you made
-	// a firebase-database from your code 
-
-	//Action Items for facePP.js: 
-		// 1) change "config" to the appropriate database
-		// 2) map to the correct database area...
-			// --> "ref('MarvelChar')" to the correct
-			// firebase key
-	//________________________________________________
-
-
-	function startFirebase(){
+//---------Initialize your Firebase Database -----------------//
 	
-		// The configuration/info needed to access the database  if FireBase
-		var config = {
-		    apiKey: "AIzaSyBKObLegkFydR8SnH6RuozzY6Il8iJYWCc",
-		    authDomain: "gtcbproj1.firebaseapp.com",
-		    databaseURL: "https://gtcbproj1.firebaseio.com",
-		    projectId: "gtcbproj1",
-		    storageBucket: "gtcbproj1.appspot.com",
-		    messagingSenderId: "793915766850"
-		};
-	 
-		//Initialize the FireBase Application
-		firebase.initializeApp(config);
-	 
-	 	// a varible to reference the entire database stored in FireBase
-		var heroData = firebase.database();
-		
-		return heroData
-	}//end of startFirebase()
+	// The configuration/info needed to access the database  if FireBase
+	var config = {
+	    apiKey: "AIzaSyBKObLegkFydR8SnH6RuozzY6Il8iJYWCc",
+	    authDomain: "gtcbproj1.firebaseapp.com",
+	    databaseURL: "https://gtcbproj1.firebaseio.com",
+	    projectId: "gtcbproj1",
+	    storageBucket: "gtcbproj1.appspot.com",
+	    messagingSenderId: "793915766850"
+	};
+ 
+	//Initialize the FireBase Application
+	firebase.initializeApp(config);
+ 
+ 	// a varible to reference the entire database stored in FireBase
+	var heroData = firebase.database();
 //___________________________________________________________//
 
 
@@ -115,13 +98,8 @@
 	   	// //If the user submitted an acceptable file type -----//
 		else {
 
-			//Initialize your Firebase Database to use soon
-				var heroData = startFirebase();
-			//___________________________________
 			
-
-
-			//----------------FOR image file---------/
+			//----------------Format image file data---------/
 
 				//Get the first file from the files submitted (should only be 1 file)
 				var convertUserUpload = userUpload[0];
