@@ -1,79 +1,94 @@
 <!DOCTYPE html>
-<html lang = "en-us">
+<html lang="en-us">
 
 <head>
 
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-	<title>Marvel-ous Face Match!</title>	
+    <title>Marvel-ous Face Match!</title>
 
-	<!-- google font -->
-	<link href="https://fonts.googleapis.com/css?family=Bungee+Shade|Lobster" rel="stylesheet">	
-	
-	<!-- google icon -->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Shade|Lobster" rel="stylesheet">
 
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- google icon -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-	<!-- materalize -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">	
+    <!-- materalize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
-	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!--jQuery-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Reference to the Crypto.js for creating an MD5 hash -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+
+    <script type="text/javascript" src="assets/javascript/config.js"></script>
+    <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
+    <!-- Added the linke to Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+
+
+
+    <!-- Reference to the Face ++ javascript-->
+    <script type="text/javascript" src="assets/javascript/facePP.js"></script>
+
+    <!-- Reference to the Marvel javascript-->
+    <script type="text/javascript" src="assets/javascript/marvel.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
 
 </head>
 
 <body>
-	<!-- page title -->
-	<h1> Marvel-ous <br> Face Match </h1>
+    <!-- page title -->
+    <h1> Marvel-ous <br> Face Match </h1>
 
-	<h3>You have been matched with ... </h3> 
+    <h3>You have been matched with ... </h3>
 
-	<div class = "container">
-
-
-	<div class="polaroids">
-
-		<div class = userIMG> </div>
-		<div class = cartoonIMG> </div>
+    <div class="container">
 
 
-	</div>
+        <div class="polaroids">
 
-		<center><a class="waves-effect black btn-large" id="again"> Try it again </a></center>
-	
-		<ul class="collapsible" data-collapsible="accordion">
+            <div class=u serIMG> </div>
+            <div class=c artoonIMG> </div>
 
- 		    <li>
-      			<div class="collapsible-header"><i class="material-icons">filter_1</i> Stories </div>
-      			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    		</li>
-    		<li>
-      			<div class="collapsible-header"><i class="material-icons">filter_2</i> Series</div>
-      			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    		</li>
-    		<li>
-      			<div class="collapsible-header"><i class="material-icons">filter_3</i> Creator</div>
-      			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    		</li>
- 		</ul>
-		
 
-	</div>
-	
+        </div>
 
-	<!-- Javascript -->
-	<script type="text/javascript" src ="assets/javascript/marvel.js"></script>
+        <center><a class="waves-effect black btn-large" id="again"> Try it again </a></center>
 
-	<!-- jQuery -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <ul class="collapsible" data-collapsible="accordion">
 
-	<!-- Materalize-javascript-->
+            <li>
+                <div class="collapsible-header"><i class="material-icons">filter_1</i> Name </div>
+                <div class="collapsible-body" id="character-name"></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">filter_2</i> Backbround</div>
+                <div class="collapsible-body" id="background"></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">filter_3</i> Comics</div>
+                <div class="collapsible-body" id="comic-images"></div>
+            </li>
+        </ul>
+
+
+    </div>
+
+
+    <!-- Javascript
+    <script type="text/javascript" src="assets/javascript/marvel.js"></script>
+
+    -->
+
+    <!-- Materalize-javascript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
 
 </body>
+
 </html>
-
-
