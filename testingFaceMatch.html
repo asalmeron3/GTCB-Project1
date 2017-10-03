@@ -1,23 +1,79 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Testing Marvel-ous Face Match</title>		
+		<title>Testing Marvel-ous Face Match</title>
+
+		<style>
+			/* The Modal (background) */
+			.modal {
+				display: none; /* Hidden by default */
+			    position: fixed; /* Stay in place */
+			    z-index: 1; /* Sit on top of the html/DOM */
+			    padding-top: 40vh; /* Location of the box --> 40% of height*/
+			    width: 100%; /* Full width of page covered */
+			    height:100%; /* Full height of page covered */
+			    background-color: rgba(0,0,0,0.3); /* Black Background @ 30% opacity */
+*/			}
+
+			/* Modal Content */
+			.modal-content {
+			    background-color: white;
+			    margin: auto;
+			    padding: 20px;
+			    border: 10px;
+			    border-style:solid;
+			    border-color:  gray;
+			    width: 80%;
+			    font-size: 25px;
+			}
+
+			/* The Close Button */
+			.close {
+				color:gray;
+				padding:15px;
+				font-size: 48px;
+				clear:left;
+				float: right;
+				font-weight: bold;
+			}
+
+			.close:hover {
+			    color: black;
+			    cursor: pointer;
+			}
+		</style>		
 
 	</head>
 
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-	<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
-	<script type = "text/javascript" src = "assets/javascript/facePP.js"> </script>
+    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+    <script type="text/javascript" src="assets/javascript/facePP.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script type="text/javascript" src="assets/javascript/config.js"></script>
+    <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
+    <script type="text/javascript" src="assets/javascript/marvel.js"></script>
+
 	<body>
 
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+
+		  <!-- Modal content -->
+		  <div class="modal-content">
+		    <span class="close">&times;</span>
+		    <p class = "TellUser"> </p>
+		  </div>
+
+		</div>
 
 		<form enctype="multipart/form-data"  method="post">
-			<label> Image1 </label>
+			<label> To be matched with a Marvel Character, upload a photo</label>
 				<input type = "file" type = "image" id = "testingPhoto">
 					<button>Submit</button>
 		</form>
+		
 
 		
 	</body>
