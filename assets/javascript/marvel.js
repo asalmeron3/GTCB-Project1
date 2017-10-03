@@ -4,26 +4,17 @@ var privateKey = config.PRIVATE_KEY;
 var ts = moment.utc().format("x").toString();
 var passhash = CryptoJS.MD5(ts + privateKey + apiKey);
 
-var config = {
-    apiKey: "AIzaSyCDLilBeBhqY-Xv4S3vDQYZJ-PAxfsqSLg",
-    authDomain: "marvel-characters-7bde8.firebaseapp.com",
-    databaseURL: "https://marvel-characters-7bde8.firebaseio.com",
-    projectId: "marvel-characters-7bde8",
-    storageBucket: "",
-    messagingSenderId: "496003755624"
-};
-firebase.initializeApp(config);
 
-
-$(document).ready(function() {
-
+//for names with spaces we need to do a string replace to return a correct result
+function displayMarvelCharacter(nameMatch) {
     var createDiv = $('<div class= "character">');
-    var queryURL = "https://gateway.marvel.com:443/v1/public/characters?name=Wasp&ts=" + ts + "&apikey=" + apiKey + "&hash=" + passhash + "&limit=5";
+    var queryURL = "https://gateway.marvel.com:443/v1/public/characters?name=" + nameMatch + "&ts=" + ts + "&apikey=" + apiKey + "&hash=" + passhash + "&limit=5";
+    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET"
     }).done(function(response) {
-        //console.log(response);
+        console.log(response);
         var name = response.data.results["0"].name;
         var thumbnail = response.data.results["0"].thumbnail.path;
         var story = response.data.results["0"].description;
@@ -32,11 +23,12 @@ $(document).ready(function() {
         var p = $("<p>");
         //p.append(name);
         //p.append(story);
-        //var img = $("<img>").attr("src", thumbnail + ".jpg");
+        var img = $("<img>").attr("src", thumbnail + ".jpg");
         //p.append(img);
         //createDiv.append(p);
         $("#character-name").html(name);
         $("#background").html(story);
+        $(".cartoonIMG").html(img);
         //$("body").append(createDiv);
         var comicURL = "https://gateway.marvel.com:443/v1/public/characters/" + characterId + "/comics?limit=4&ts=" + ts + "&apikey=" + apiKey + "&hash=" + passhash;
         $.ajax({
@@ -56,7 +48,7 @@ $(document).ready(function() {
                 innerDiv.append(p);
             }
 
-            $("#comic-images").append(innerDiv);
+            //$("#comic-images").append(innerDiv);
 
 
 
@@ -64,5 +56,4 @@ $(document).ready(function() {
 
         });
     });
-
-});
+}
