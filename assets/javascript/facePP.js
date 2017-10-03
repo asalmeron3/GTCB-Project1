@@ -2,328 +2,368 @@
 
 
 //----------------------The Form From HTML----------------//
-
-//YU: I will need the id from the user's photo 
-// submission.
-
-
-//Action Item for facePP.js : 
-//  1)change "#testingPhoto" to the correct id 
-//
+	
+	//YU: I will need the id from the user's photo 
+	// submission.
 
 
-// <form enctype="multipart/form-data"  method="post">
-// 	<label> Submit Your Photo Here </label>
-// 		<input type = "file" type = "image" id = "testingPhoto">
-// 			<button>Submit</button>
-// </form>
+	//Action Item for facePP.js : 
+		//  1)change "#testingPhoto" to the correct id 
+	//
+
+
+	// <form enctype="multipart/form-data"  method="post">
+	// 	<label> Submit Your Photo Here </label>
+	// 		<input type = "file" type = "image" id = "testingPhoto">
+	// 			<button>Submit</button>
+	// </form>
 //___________________________________________________________//
 
 
 //---------Initialize your Firebase Database -----------------//
-
-// The configuration/info needed to access the database  if FireBase
-var config = {
-    apiKey: "AIzaSyBKObLegkFydR8SnH6RuozzY6Il8iJYWCc",
-    authDomain: "gtcbproj1.firebaseapp.com",
-    databaseURL: "https://gtcbproj1.firebaseio.com",
-    projectId: "gtcbproj1",
-    storageBucket: "gtcbproj1.appspot.com",
-    messagingSenderId: "793915766850"
-};
-
-//Initialize the FireBase Application
-firebase.initializeApp(config);
-
-// a varible to reference the entire database stored in FireBase
-var heroData = firebase.database();
+	
+	// The configuration/info needed to access the database  if FireBase
+	var config = {
+	    apiKey: "AIzaSyBKObLegkFydR8SnH6RuozzY6Il8iJYWCc",
+	    authDomain: "gtcbproj1.firebaseapp.com",
+	    databaseURL: "https://gtcbproj1.firebaseio.com",
+	    projectId: "gtcbproj1",
+	    storageBucket: "gtcbproj1.appspot.com",
+	    messagingSenderId: "793915766850"
+	};
+ 
+	//Initialize the FireBase Application
+	firebase.initializeApp(config);
+ 
+ 	// a varible to reference the entire database stored in FireBase
+	var heroData = firebase.database();
 //___________________________________________________________//
 
 
 
 //-----------------Face++ API Info -------------------------//
 
-var analyzeLink = "https://api-us.faceplusplus.com/facepp/v3/face/analyze?";
-var detectLink = "https://api-us.faceplusplus.com/facepp/v3/detect?";
+	var analyzeLink = "https://api-us.faceplusplus.com/facepp/v3/face/analyze?";
+	var detectLink = "https://api-us.faceplusplus.com/facepp/v3/detect?"
 
-var API_KEY = "E3RSc9g4hOdNXNi3wuLJsy1Qkw0RGKMl";
-var API_SECRET = "u5VWJDR0NLRSWySPsRT8zYar6HHfVzKe";
+	var API_KEY = "E3RSc9g4hOdNXNi3wuLJsy1Qkw0RGKMl";
+	var API_SECRET = "u5VWJDR0NLRSWySPsRT8zYar6HHfVzKe";
 //___________________________________________________________//
 
 
 
 //-------The Marvel Character We Have Matched To User---------//
 
-var MarvelCharMatch = "BatMan";
-// You can never be BatMan, but we'll let be you 
-// be him here...yes WE KNOW that's a DC Character
+	var MarvelCharMatch = "BatMan";
+		// You can never be BatMan, but we'll let be you 
+		// be him here...yes WE KNOW that's a DC Character
 //___________________________________________________________//
 
 
 
 $(document).ready(function(){
-    //-------------Once the user has Submitted A Photo-----------//
 
-    $("button").on("click", function(event) {
+	//-------------Once the user has Submitted A Photo-----------//
 
-        //Prevent the page from refreshing
-        event.preventDefault();
+		$("button").on("click",function(event){
+			
+			//Prevent the page from refreshing
+			event.preventDefault();
 
-        // Get the LIST of files that user has submitted
-        var userUpload = document.getElementById("testingPhoto").files;
+			// Get the LIST of files that user has submitted
+			var userUpload = document.getElementById("testingPhoto").files;
 
-        // Using the first (and only) file in the list, check if ...
+			// Using the first (and only) file in the list, check if ...
 
-        //--------If the user did NOT upload a file ----------//
-        if (userUpload[0] == undefined) {
+			//--------If the user did NOT upload a file ----------//
+				if ( userUpload[0] == undefined) {
+					
+					//Let the user know (via MODAL) to go back and submit a file
+					// alert("You Have Not Submitted a photo. Please submit a JPG photo");
+					dispModal("Please Upload a Picture. Submit a JPG, JPEG, or PNG file only.");
+				}//end of first condition under "button"
+			//__________________________________________________//
 
-            //Let the user know (via MODAL) to go back and submit a file
-            alert("You Have Not Submitted a photo. Please submit a JPG photo");
 
-        } //end of first condition under "button"
-        //__________________________________________________//
 
+			//----If the user did submit a file, check the file type----//
 
+				else if (!userUpload[0].name.match(/.(jpg|jpeg|png)$/i)){
+					
+					//Let the user know (via MODAL) to go back and submit a file	
+					// alert('not an image');
+					dispModal("This file is not acceptable. Submit a JPG, JPEG, or PNG file only.");
+				} // end of second condition under "button"
+		   	//__________________________________________________//
 
-        //----If the user did submit a file, check the file type----//
-        else if (!userUpload[0].name.match(/.(jpg|jpeg|png)$/i)) {
 
-            //Let the user know (via MODAL) to go back and submit a file	
-            alert('not an image');
-        } // end of second condition under "button"
-        //__________________________________________________//
+		   	// //If the user submitted an acceptable file type -----//
+				else {
 
+					
+					//----------------Format image file data---------/
 
-        // //If the user submitted an acceptable file type -----//
-        else {
+						//Get the first file from the files submitted (should only be 1 file)
+						var convertUserUpload = userUpload[0];
 
+						//initialize/creat a variable that will contain form data. This data should be 
+						//binary data that Face++ needs in order to detect/analayse the photo
+						var file = new FormData();
 
-            //----------------Format image file data---------/
+						//append the name of the parameter "image_file" to your binary data
+						file.append("image_file", convertUserUpload);
 
-            //Get the first file from the files submitted (should only be 1 file)
-            var convertUserUpload = userUpload[0];
+						// "file" will be the DATA we send Face++ in the ajax call
+					//________________________________________//
+				
 
-            //initialize/creat a variable that will contain form data. This data should be 
-            //binary data that Face++ needs in order to detect/analayse the photo
-            var file = new FormData();
 
-            //append the name of the parameter "image_file" to your binary data
-            file.append("image_file", convertUserUpload);
+					//----------the FIRST API Request for FACE++------///
 
-            // "file" will be the DATA we send Face++ in the ajax call
-            //________________________________________//
+						//compose the URL for ajax to request api data from FACE++. "Detect" will find
+						//the face and assign that face a "token". The token is needed to later analyze
+						var queryURL = detectLink+ "api_secret=" + API_SECRET+ "&api_key="+API_KEY;
 
+						//Configure your First Ajax request
+						$.ajax({
 
-            //----------the FIRST API Request for FACE++------///
+							//provide the url for your request
+						    url: queryURL,
 
-            //compose the URL for ajax to request api data from FACE++. "Detect" will find
-            //the face and assign that face a "token". The token is needed to later analyze
-            var queryURL = detectLink + "api_secret=" + API_SECRET + "&api_key=" + API_KEY;
+						    //state the type of request. For Face++, the type is "POST"
+						    type: 'POST',
 
-            //Configure your First Ajax request
-            $.ajax({
+						    //prevent JAVASCRIPT from trying to find the contentType and from processingData on the file
+						    contentType: false,
+						    processData: false,
 
-                //provide the url for your request
-                url: queryURL,
+						    //give your ajax request data it needs in order to fulfill the request for Face++ ...
+						    //the "data" is the image the use uploaded with the "image_file" parameter included
+						    data:  file
 
-                //state the type of request. For Face++, the type is "POST"
-                type: 'POST',
+							}).done(function(response){
+								//Upon getting your first request from Face++, prepare to make a SECOND request...
+								 // using the unique "face_token" created in the first request. 
 
-                //prevent JAVASCRIPT from trying to find the contentType and from processingData on the file
-                contentType: false,
-                processData: false,
+								if (response.faces[0] == undefined) {
+									var say = "This Photo is not Superhero worthy! Please try a different photo.";
+									dispModal(say);
+								}
 
-                //give your ajax request data it needs in order to fulfill the request for Face++ ...
-                //the "data" is the image the use uploaded with the "image_file" parameter included
-                data: file
+								else{
+									// find/obtain/store the the token from the RESPONSE of your Detect-Ajax call
+									var token = response.faces[0].face_token;
 
-            }).done(function(response) {
-                //Upon getting your first request from Face++, prepare to make a SECOND request...
-                // using the unique "face_token" created in the first request. 
+									//Prepare a different URL for the ajax call. This link will ANALYZE the face of the image...
+									//The image CANNOT be a file. It specifically has to be the UNIQUE TOKEN generated from the DETECT request					
+									var queryURL2 = analyzeLink+ "api_secret=" + API_SECRET+ "&api_key="+API_KEY + "&face_tokens="+token;
 
-                // find/obtain/store the the token from the RESPONSE of your Detect-Ajax call
-                var token = response.faces[0].face_token;
+									//To the URL, add the parameter "return_landmark=1". Face++ needs this to analyze appropriately
+									//Also add the parameter "return_attributes" to get facial info on age, gender, emotion, and smiling 
+									var features ="&return_landmark=1&return_attributes=gender,age,smiling,emotion"; 
 
-                //Prepare a different URL for the ajax call. This link will ANALYZE the face of the image...
-                //The image CANNOT be a file. It specifically has to be the UNIQUE TOKEN generated from the DETECT request					
-                var queryURL2 = analyzeLink + "api_secret=" + API_SECRET + "&api_key=" + API_KEY + "&face_tokens=" + token;
+									//add the features to the URL
+									queryURL2 = queryURL2 + features;	
 
-                //To the URL, add the parameter "return_landmark=1". Face++ needs this to analyze appropriately
-                //Also add the parameter "return_attributes" to get facial info on age, gender, emotion, and smiling 
-                var features = "&return_landmark=1&return_attributes=gender,age,smiling,emotion";
+									//Configure your SECOND Ajax request to ANALYZE the face. Type is still "POST"
+									$.ajax({
 
-                //add the features to the URL
-                queryURL2 = queryURL2 + features;
+									    url: queryURL2,
+									    type: 'POST'
+									  
+										}).done(function(response2){
 
-                //Configure your SECOND Ajax request to ANALYZE the face. Type is still "POST"
-                $.ajax({
+											//Make an array of strings of the seven (7) emotions Face++ Rates. This is for indexing later
+											var potentialEmotions = ["anger", "disgust","fear","happiness","neutral","sadness", "surprise"];
 
-                    url: queryURL2,
-                    type: 'POST'
+											// Obtain/store the object of emotions that was sent back (from the 2nd request)
+											var emotions = response2.faces[0].attributes.emotion;
 
-                }).done(function(response2) {
+											//Prepare Two Variables: One for the strongest emotion and One for that emotions Rating/Percentage
+											//Both of these variables will be used for matching the User's face to a Marvel Character
+											var emotionToMatch = "tired";
+											var numToMatch = 0; // <-- 0% tired? ... this may be a lie
 
-                    //Make an array of strings of the seven (7) emotions Face++ Rates. This is for indexing later
-                    var potentialEmotions = ["anger", "disgust", "fear", "happiness", "neutral", "sadness", "surprise"];
 
-                    // Obtain/store the object of emotions that was sent back (from the 2nd request)
-                    var emotions = response2.faces[0].attributes.emotion;
+											// LOOP through the list of 7 possible emotions. Use the emotion to INDEX your Object of ...
+											// emotions ( from the 2nd response) and obtain the values of each emotion
+											for (i=0; i < potentialEmotions.length ; i++){
 
-                    //Prepare Two Variables: One for the strongest emotion and One for that emotions Rating/Percentage
-                    //Both of these variables will be used for matching the User's face to a Marvel Character
-                    var emotionToMatch = "tired";
-                    var numToMatch = 0; // <-- 0% tired? ... this may be a lie
+												//Define the current emotion at the current index
+												var currentEmo = potentialEmotions[i];
 
+												// Check your EmotionObject for an emotion that has a higher value than the current rating
+												if (numToMatch <emotions[currentEmo]) {
 
-                    // LOOP through the list of 7 possible emotions. Use the emotion to INDEX your Object of ...
-                    // emotions ( from the 2nd response) and obtain the values of each emotion
-                    for (i = 0; i < potentialEmotions.length; i++) {
+													// Update "numToMatch" to be the value of your higher rated emotion (rounded down)
+													numToMatch = Math.floor(emotions[currentEmo]);
 
-                        //Define the current emotion at the current index
-                        var currentEmo = potentialEmotions[i];
+													// Update "emotionToMatch" to be the higher rated emotion
+													emotionToMatch = currentEmo;
 
-                        // Check your EmotionObject for an emotion that has a higher value than the current rating
-                        if (numToMatch < emotions[currentEmo]) {
+												} //end of "numToMatch" If
 
-                            // Update "numToMatch" to be the value of your higher rated emotion (rounded down)
-                            numToMatch = Math.floor(emotions[currentEmo]);
+											} //end of "potentialEmotions" FOR loop
 
-                            // Update "emotionToMatch" to be the higher rated emotion
-                            emotionToMatch = currentEmo;
 
-                        } //end of "numToMatch" If
+											//make a object that includes the user's Highest Rated Emotion and the Rating
+											var theUser = {
+												Emotion: emotionToMatch,
+												EmoRate: numToMatch,
+											};
 
-                    } //end of "potentialEmotions" FOR loop
 
+											// Add this User's Info to your database user the key "UserInfo"
+											heroData.ref("UserInfo/").set(theUser);
 
-                    //make a object that includes the user's Highest Rated Emotion and the Rating
-                    var theUser = {
-                        Emotion: emotionToMatch,
-                        EmoRate: numToMatch,
-                    };
 
+											// Tell your database to run the functions "gotData" and "errData" when a value ...
+											//is changed in the database. In this case, everytime the user's info is added.
+											// The Key/reference where the MarvelCharacter are is in "MarvelChar"
+											heroData.ref("MarvelChar").on("value",gotData,errData);
 
-                    // Add this User's Info to your database user the key "UserInfo"
-                    heroData.ref("UserInfo/").set(theUser);
 
 
-                    // Tell your database to run the functions "gotData" and "errData" when a value ...
-                    //is changed in the database. In this case, everytime the user's info is added.
-                    // The Key/reference where the MarvelCharacter are is in "MarvelChar"
-                    heroData.ref("MarvelChar").on("value", gotData, errData);
+											//-------A Function that returns the Marvel Character from the Database----//
 
+												function gotData(data){
 
+													//Get the Data stored in "MarvelChar"
+													var allDataObj = data.val();
 
-                    //-------A Function that returns the Marvel Character from the Database----//
+													//Get all the KEYS in "MarvelChar"
+													var theKeys = Object.keys(allDataObj);
 
-                    function gotData(data) {
+													// Define 2 arrays to store the Names and EmotionRating of Characters
+													// that match the user's emotion
+													var theMatchesNames = [];
+													var theMatchesEmoRate = [];
 
-                        //Get the Data stored in "MarvelChar"
-                        var allDataObj = data.val();
+													// LOOP through all the keys in "MarvelChar"
+													for (k =0; k < theKeys.length; k++){
 
-                        //Get all the KEYS in "MarvelChar"
-                        var theKeys = Object.keys(allDataObj);
+														// define the current key at the index
+														var aSingleKey = theKeys[k];
 
-                        // Define 2 arrays to store the Names and EmotionRating of Characters
-                        // that match the user's emotion
-                        var theMatchesNames = [];
-                        var theMatchesEmoRate = [];
+														//Define the emotion at each key/character
+														var emotionInFB = allDataObj[aSingleKey].Emotion;
 
-                        // LOOP through all the keys in "MarvelChar"
-                        for (k = 0; k < theKeys.length; k++) {
+														// If the emotion at the key/character, matches the user's emotion...
+														if (emotionInFB ==emotionToMatch){
 
-                            // define the current key at the index
-                            var aSingleKey = theKeys[k];
+															// store the name of the character in "theMatchesNames" ...
+															theMatchesNames.push(allDataObj[aSingleKey].Name);
 
-                            //Define the emotion at each key/character
-                            var emotionInFB = allDataObj[aSingleKey].Emotion;
+															// and store the emotionRating in the "theMatchesEmoRate"
+															theMatchesEmoRate.push(allDataObj[aSingleKey].EmoRate);
 
-                            // If the emotion at the key/character, matches the user's emotion...
-                            if (emotionInFB == emotionToMatch) {
+														} //end of IF
 
-                                // store the name of the character in "theMatchesNames" ...
-                                theMatchesNames.push(allDataObj[aSingleKey].Name);
+													} // end of FOR
 
-                                // and store the emotionRating in the "theMatchesEmoRate"
-                                theMatchesEmoRate.push(allDataObj[aSingleKey].EmoRate);
+													// Get the Index of the closest character match using "closestMatch"
+													// the inputs should be the user's emotion-rating ("numToMatch")
+													// and the array of Marvel Characters' emotion ratings "theMatchesEmoRate"
+													var theMatchIndex = closestMatch(numToMatch,theMatchesEmoRate);
 
-                            } //end of IF
+													// The Name of the closest matching character (use the index)
+													MarvelCharMatch = theMatchesNames[theMatchIndex];
 
-                        } // end of FOR
+													console.log('YOUR MATCH IS: ');
+													console.log(MarvelCharMatch);
+													displayMarvelCharacter(MarvelCharMatch);
 
-                        // Get the Index of the closest character match using "closestMatch"
-                        // the inputs should be the user's emotion-rating ("numToMatch")
-                        // and the array of Marvel Characters' emotion ratings "theMatchesEmoRate"
-                        var theMatchIndex = closestMatch(numToMatch, theMatchesEmoRate);
 
-                        // The Name of the closest matching character (use the index)
-                        MarvelCharMatch = theMatchesNames[theMatchIndex];
+												} // end of gotData()
+											//______________________________________________________________________//
 
-                        console.log('YOUR MATCH IS: ');
-                        console.log(MarvelCharMatch);
-                        displayMarvelCharacter(MarvelCharMatch)
 
+											// ------A function that returns an INDEX of the closest match---//
 
-                    } // end of gotData()
-                    //______________________________________________________________________//
+												//inputs: 1) a single number 2) an array of numbers
+									            function closestMatch (num, arrOfNums) {
 
-                    // ------A function that returns an INDEX of the closest match-----//
+									            	// Store the first number of the array
+									                var currentMatch = arrOfNums[0];
 
-                    //inputs: 1) a single number 2) an array of numbers
-                    function closestMatch(num, arrOfNums) {
+									                // Find/Store the absolute-difference in first number in the array and the first input
+									                var diffInCurrentNum = Math.abs (num - currentMatch);
 
-                        // Store the first number of the array
-                        var currentMatch = arrOfNums[0];
+									                // Store the current index --> 0
+									                var indexOfMatch = 0;
 
-                        // Find/Store the absolute-difference in first number in the array and the first input
-                        var diffInCurrentNum = Math.abs(num - currentMatch);
+									                // LOOP throught the array of numbers
+									                for (j = 0; j < arrOfNums.length; j++) {
 
-                        // Store the current index --> 0
-                        var indexOfMatch = 0;
+									                	// store the absolute-difference between the first input an the next # in the array
+									                    var nextNumDiff = Math.abs (num - arrOfNums[j]);
 
-                        // LOOP throught the array of numbers
-                        for (j = 0; j < arrOfNums.length; j++) {
+									                    //check to see if the current/next diffrence is less, if so...
+									                    if (nextNumDiff < diffInCurrentNum) {
 
-                            // store the absolute-difference between the first input an the next # in the array
-                            var nextNumDiff = Math.abs(num - arrOfNums[j]);
+									                    	//update diffInCurrentNum (this should be smaller/closer matching)
+									                        diffInCurrentNum = nextNumDiff;
 
-                            //check to see if the current/next diffrence is less, if so...
-                            if (nextNumDiff < diffInCurrentNum) {
+									                       // Update your Index
+									                        indexOfMatch = j;
 
-                                //update diffInCurrentNum (this should be smaller/closer matching)
-                                diffInCurrentNum = nextNumDiff;
+									                    } //end of IF
 
-                                // Update your Index
-                                indexOfMatch = j;
+									                } // end of FOR
 
-                            } //end of IF
+									                // RETURN the index --> Used to index the Marvel Character's Name
+									                return indexOfMatch;
 
-                        } // end of FOR
+									            } //end of closestMatch()
+									        //___________________________________________________________//
 
-                        // RETURN the index --> Used to index the Marvel Character's Name
-                        return indexOfMatch;
+											
+									        // ------------A function that returns an error-------------//
+												function errData(err){
+													dispModal("An Error has occurred! Please refresh the page and try again.");
+												} //end of errData()
+											//__________________________________________________________//
+										}) // End of .done(response2)
+									// End of second Ajax call
+								}// End else (right before 2nd ajax call)
+							}) // End of .done(response)	
+						// End of first Ajax call
+					// end of comment before first Ajax call
+				}// End of ELSE (from clicking submit)
+			// end of comment before ELSE//
+		}); // End of the user click
+	// end of comment before user click
+});	//End of (document).ready()//
 
-                    } //end of closestMatch()
-                    //_________________________________________________________________//
 
+//----A function takes in a string to display via a modal ----//
+	function dispModal(messToDisp){
 
+		// Get the modal from the HTML doc
+		var modal = document.getElementById('myModal');
 
+		//Update the paragraph in the modal to include the input-string "messToDisp"
+		$(".TellUser").html(messToDisp);
 
+		// Display the entire modal to "block" the DOM
+		modal.style.display = "block";
 
-                    // ------------A function that returns an error-------------//
-                    function errData(err) {
-                        console.log("Error!");
-                        console.log(err);
-                    } //end of errData()
-                    //____________________________________________________________
 
-                }); //end of .done(response2)
+		// When the user clicks on (x) inside modal-content, close the modal
+		$(".close").on("click", function() {
+		    modal.style.display = "none";
+		})
 
-            }); //end of .done(response)	
-            
-        } // end of ELSE ...twas a long else
+		// When the user clicks anywhere outside of the modal-content, close the modal
+		$(window).on("click",function(event) {
+		    if (event.target == modal) {
+		        modal.style.display = "none";
+		    }
+		})
+	} //end of dispModal()
+//_________________________________________________________//
 
 
-    }); // End of the user click
+//---------------------------End of facePP.js----------------------------//
 
-}); //_______________________________________THE END__________________________________________________________//
+
