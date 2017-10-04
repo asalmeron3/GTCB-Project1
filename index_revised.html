@@ -29,9 +29,28 @@
   <!-- Materalize-javascript-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
+  <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+    <script type="text/javascript" src="assets/javascript/facePP.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script type="text/javascript" src="assets/javascript/config.js"></script>
+    <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
+    <script type="text/javascript" src="assets/javascript/marvel.js"></script>
+
 </head>
 
 <body>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p class = "TellUser"> </p>
+      </div>
+
+    </div>
+    
 	<div class = "whole-container">
     <div class = "hide1">
 		  <header class = "main panel red">
@@ -104,17 +123,17 @@
 
      <section class="comic panel red">
       <ul class="collapsible popout" data-collapsible="accordion">
-    <li>
+<!--     <li>
       <div class="collapsible-header"><i class="material-icons">filter_1</i>Name</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+      <div class="collapsible-body" id = "character-name"><span></span></div>
     </li>
     <li>
       <div class="collapsible-header"><i class="material-icons">filter_2</i>Background Story</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
+      <div class="collapsible-body" id = "backgroundStory"><span></span></div>
+    </li> -->
     <li>
-      <div class="collapsible-header"><i class="material-icons">filter_3</i>Comic Seriese</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+      <div class="collapsible-header"><i class="material-icons">filter</i>Comic Seriese</div>
+      <div class="collapsible-body" id = "comic-images"><span></span></div>
     </li>
   </ul>
     

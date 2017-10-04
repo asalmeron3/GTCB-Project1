@@ -1,25 +1,5 @@
 // This is javascript related to Face++ API
 
-
-//----------------------The Form From HTML----------------//
-	
-	//YU: I will need the id from the user's photo 
-	// submission.
-
-
-	//Action Item for facePP.js : 
-		//  1)change "#testingPhoto" to the correct id 
-	//
-
-
-	// <form enctype="multipart/form-data"  method="post">
-	// 	<label> Submit Your Photo Here </label>
-	// 		<input type = "file" type = "image" id = "testingPhoto">
-	// 			<button>Submit</button>
-	// </form>
-//___________________________________________________________//
-
-
 //---------Initialize your Firebase Database -----------------//
 	
 	// The configuration/info needed to access the database  if FireBase
@@ -65,7 +45,7 @@ $(document).ready(function(){
 
 	//-------------Once the user has Submitted A Photo-----------//
 
-		$("button").on("click",function(event){
+		$("#submit").on("click",function(event){
 			
 			//Prevent the page from refreshing
 			event.preventDefault();
@@ -106,15 +86,40 @@ $(document).ready(function(){
 						//Get the first file from the files submitted (should only be 1 file)
 						var convertUserUpload = userUpload[0];
 
-						//initialize/creat a variable that will contain form data. This data should be 
-						//binary data that Face++ needs in order to detect/analayse the photo
-						var file = new FormData();
 
-						//append the name of the parameter "image_file" to your binary data
-						file.append("image_file", convertUserUpload);
+						// ----------For Displaying on DOM--------//
 
-						// "file" will be the DATA we send Face++ in the ajax call
-					//________________________________________//
+							//define a variable to create an image
+							var userPhoto = $("<img>");
+
+							//read the image-file with a new FileReader
+							var reader = new FileReader();
+
+							// Do some magic...
+	  						reader.onload = function(event){
+	  							var source = event.target.result;
+
+	  							// add the source attribute to the img tag
+								userPhoto.attr("src",source);
+
+	  						}
+
+	  						reader.readAsDataURL(convertUserUpload);
+	  					//______________________________________//
+
+
+	  					//-------+------For FacePP----------------//
+
+							//initialize/creat a variable that will contain form data. This data should be 
+							//binary data that Face++ needs in order to detect/analayse the photo
+							var file = new FormData();
+
+							//append the name of the parameter "image_file" to your binary data
+							file.append("image_file", convertUserUpload);
+
+							// "file" will be the DATA we send Face++ in the ajax call
+						//________________________________________//
+					//________________________________________________//
 				
 
 
@@ -273,6 +278,11 @@ $(document).ready(function(){
 													console.log(MarvelCharMatch);
 													displayMarvelCharacter(MarvelCharMatch);
 
+													//--------------Hide the "First Page" ---------//
+														$('.hide1').css("display", "none");
+														$('.hide2').css("display", "inline");
+														$("#upic").html(userPhoto);
+													//____________________________________________//
 
 												} // end of gotData()
 											//______________________________________________________________________//
