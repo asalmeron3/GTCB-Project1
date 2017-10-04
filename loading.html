@@ -1,44 +1,34 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>loading...</title>
 
-	<!-- google font -->
-	<link href="https://fonts.googleapis.com/css?family=Bungee+Shade" rel="stylesheet">
-	
-	<!-- google icon -->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<title>loading</title>
 
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
 
-	<!-- materalize -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">	
+#video { 
+     position: absolute;
+     top: 0px;
+     left: 0px;
+     min-width: 100%;
+     min-height: 100%;
+     width: auto;
+     height: auto;
+     z-index: -1;
+     overflow: hidden;
+}
 
-	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+</style>
 
 </head>
 
 <body>
-	
-	<div id="loading"><img id="loading-image" src="https://media.giphy.com/media/DgJutSXhzS4bC/giphy.gif" alt="Loading..." /></div>
+	<video id="video" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
 
+    <source src="assets/images/loading.mp4">
 
-
-	<div class = "container">
-
-
-  	</div>
-
-  	<!-- <script type="text/javascript">
-  		
-  	$(window).load(function() {    
-    
-    $('#loading').hide();  
-    });
-
-  	</script> -->
+	</video>
 
 </body>
 </html>
