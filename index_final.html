@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
-<html lang="en-us">
+<html lang = "en-us">
 
 <head>
 
-	<meta charset="UTF-8">
+<meta charset="UTF-8">
 
 	<title>Marvel-ous Face Match</title>
 
@@ -23,54 +23,133 @@
 	<!-- css -->
 	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
 
-  <!-- jQuery -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<!-- jQuery -->
+  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-  <!-- Materalize-javascript-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-
+  	<!-- Materalize-javascript-->
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </head>
+
 <body>
+
 	<div class = "whole-container">
-		<div class = "hide1">
-			<header class = "main pannel red">
-				<h2 class = "big"> MARVEL-OUS</h2>
-				<h1 class = "big"> Face Match </h1>
-			</header>
+<div class = "hide1">
+	<header class = "main panel red">
+		<h2 class = "big">marvel-ous</h2>
+		<h1 class = "big">face match</h1>		
+	</header>
 
-			<section class="main panel grey">
-				<h3> </h3>
-				<div class="row">
-					<div class="col s12 m4 l4"> </div>
-    			  	<div class="col s12 m4 l4" id="a">
-      				<div class="card">
-        			<div class="card-image">
-						<img src="assets/images/profile.gif">
-							<form enctype="multipart/form-data"  method="post">
-							<label for = "testingPhoto" class = "custom-file-upload">
-							<a class="btn-floating  waves-light red"><i class="material-icons">add</i></a> 
-							</label>
-							<input type = "file" id = "testingPhoto">
-							</form>
-					</div>
-					</div>
-					</div>
+	<section class = "main panel grey">
+		<h3> --------▶ Find Your Matching <br>
+		     -----------▶ Marvel Charater </h3>
 
-					<div class="card-content">
-						<h4>Click the button to Add Your Picture and we will match you with Marvel Characters</h4>
-					</div>
-				</div>
+		<div class="row">
+			<div class="col s12 m4 l4"> </div>
+    		<div class="col s12 m4 l4" id="a">
+      			<div class="card">
+        		<div class="card-image">
+          		<img src="assets/images/profile.gif">
 
-				</div>
+          		<form enctype="multipart/form-data"  method="post">
+  				<label for = "testingPhoto" class = "custom-file-upload">
 
-			</section>
+          		<a class="btn-floating btn-large halfway-fab waves-effect red accent-4"><i class="material-icons">add</i></a>
 
+          		</label>
+				
+				<input type="file" id = "testingPhoto">
 
-		</div>
+          		</form>
 
-
-
+        	</div>
+        	<div class="card-content">
+          		<h4>Click the Button <br>to Add Your Picture!</h4>
+        	</div>
+      		</div>
+    		</div>
+    		<div class="col s12 m4 l4"> </div>
+  		</div>
+		
+		<p id="move1">
+  		<button class="btn waves-effect red accent-4 btn-large" id="submit" type="submit" name="action">
+  		<i class="material-icons right">send</i>Submit</button>
+  		</p>	
+            
+	</section>
 	</div>
+
+<div class ="hide2">
+	<header class = "main panel red">
+		<h2 class = "big"> You Have Been </h2>
+		<h1 class = "big"> Matched with . . . </h1>
+	</header>
+
+	<section class = "main panel grey">
+		<div class ="row">
+			<div class="col s12 m6 l2"></div>
+            <div class="col s12 m6 l3" id="upic"></div>
+            <div class="col s12 m6 l2">
+            	<img id ="move3" src="http://www.clker.com/cliparts/W/q/D/p/e/7/small-red-heart-with-transparent-background-md.png" width="100px" height="100px">
+            </div>            	
+            <div class="col s12 m6 l3" id="cpic"></div>
+            <div class="col s12 m6 l2"></div>
+		</div>
+		
+		<p id="move2">
+		<button class="btn waves-effect red accent-4 btn-large" id="try" type="submit" name="action">
+
+		<i class="material-icons right">replay</i>Try Again</button>
+		</p>
+
+	</section>
+
+	<section class="comic panel red">
+		<ul class="collapsible popout" data-collapsible="accordion">
+   		<li>
+      		<div class="collapsible-header"><i class="material-icons">filter_1</i>Name</div>
+      		<div class="collapsible-body" id="character-name"><span></span></div>
+   		</li>
+    	<li>
+      		<div class="collapsible-header"><i class="material-icons" >filter_2</i>Background Story</div>
+     		<div class="collapsible-body" id="backgroundStory"><span></span></div>
+   		</li>
+    	<li>
+     		<div class="collapsible-header"><i class="material-icons">filter_3</i>Comic Seriese</div>
+      		<div class="collapsible-body" id="comic-images"><span></span></div>
+    	</li>
+  		</ul>
+	</section>
+	</div>
+</div>
+
+	<footer class="page-footer red darken-4">
+      	<div class="container">
+        	<div class="row">
+        		<div class="col l6 s12">
+        			<h5 class="darkgrey-text">How Does It Works?</h5>
+       				<p class="darkgrey-text">We are using FACE++ API to get values from your face and compare that with the Charaters of Marvel to find which superhero/villan matches you best based on a ranking of the seven base emotions.</p>
+        		</div>
+       			<div class="col l4 offset-l2 s12">
+       				<h5 class="darkgrey-text">Developer</h5>
+        				<ul>
+        				<li><a class="grey-text text-lighten-3" href="https://github.com/asalmeron3">Arturo Salmeron</a></li>
+        				<li><a class="grey-text text-lighten-3" href="https://github.com/yu-jung-jung">Yu Jung Jung</a></li>
+        				<li><a class="grey-text text-lighten-3" href="https://github.com/lclc68lclc">Willina Clark</a></li>
+        				</ul>
+       			</div>
+        	</div>
+        </div>
+        <div class="footer-copyright">
+       		<div class="container">
+        		© 2017 Copyright 
+        		<a class="white-text text-lighten-4 right" href="https://pe.gatech.edu/computing/georgia-tech-coding-boot-camp">Georgia Tech Coding Boot Camp</a>
+        	</div>
+        </div>
+	</footer>	
+</div>
+<!-- Javascript -->
+	<script type="text/javascript" src ="assets/javascript/app.js"></script>
+
 
 </body>
 </html>
