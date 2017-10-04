@@ -7,6 +7,15 @@
 
 	<title>Marvel-ous Face Match!</title>	
 
+	<style>
+
+	#testingPhoto {
+    display: none;
+	}
+
+
+	</style>
+
 	<!-- google font -->
 	<link href="https://fonts.googleapis.com/css?family=Bungee+Shade|Lobster" rel="stylesheet">
 	<!-- google icon -->
@@ -37,16 +46,24 @@
 	      			<div class="card">
 	        			<div class="card-image">
 	          				<img src="assets/images/default.jpg">
-	          				<span class="card-title"> </span>
+	          				<span class="card-title" > </span>
 
 	         				<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a> 	
 
 				    		
 	       				</div>
 
-	        		<div class="card-content">
-	         		<p> Click the button to add your picture!</p>
-	        	</div> 
+		        		<div class="card-content">
+			        		<form enctype="multipart/form-data"  method="post">
+									<label for = "testingPhoto" class = "custom-file-upload">
+
+									<a class="btn-floating  waves-light red"><i class="material-icons">add</i></a> 
+									</label>
+
+									<input type = "file" id = "testingPhoto">
+
+							</form>
+		        		</div> 
 
 	      			</div>
 	    		</div>
