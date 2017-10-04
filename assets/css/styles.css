@@ -95,7 +95,17 @@ h5, p,li{
   background-color: white;
 }
 
+#move1,
+#move2{
+  text-align: center;
+}
 
+#move3{
+  display: block;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto
+}
 /*======
 img {
     height: 200px;
