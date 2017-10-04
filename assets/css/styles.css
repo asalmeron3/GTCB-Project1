@@ -1,4 +1,41 @@
 /*layout*/
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Sit on top of the html/DOM */
+  padding-top: 25vh; /* Location of the box --> 40% of height*/
+  width: 100vw; /* Full width of page covered */
+  height:100vh; /* Full height of page covered */
+  background-color: rgba(0,0,0,0.5); /* Black Background @ 30% opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: white;
+  margin: auto;
+  padding: 20px;
+  border: 10px;
+  border-style:solid;
+  border-color:  #bd2d10;
+  width: 80%;
+  font-size: 25px;
+}
+
+/* The Close Button */
+.close {
+color:blue;
+/*padding:15px;
+*/font-size: 48px;
+clear:left;
+float: right;
+font-weight: bold;
+}
+
+.close:hover {
+  color: black;
+  cursor: pointer;
+}
 .whole-container{
 	width: 100%;
 	height: auto;
@@ -122,6 +159,8 @@ img{
   margin-top: -50px; /* Half the height */
   margin-left: -50px;
 }
+
+
 /*======
 img {
     height: 200px;
