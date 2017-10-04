@@ -18,6 +18,7 @@ function displayMarvelCharacter(nameMatch) {
         var name = response.data.results["0"].name;
         var thumbnail = response.data.results["0"].thumbnail.path;
         var story = response.data.results["0"].description;
+        var charStats = response.data.results["0"].urls[0].url;
             if (story==""){
                 story = "A description is not available for this character :( ";
             }
@@ -30,8 +31,8 @@ function displayMarvelCharacter(nameMatch) {
         //p.append(img);
         //createDiv.append(p);
         var NameUnderPic = $("<div>");
-        NameUnderPic.html("<h2>"+ name+ "</h2>");
-        $("#character-name").html(name);
+        NameUnderPic.html("<a href='"+ charStats+ "'>" +"<h2>"+ name+"</h2>" +"</a>");
+        // $("#character-name").;
         $("#backgroundStory").html(story);
         $("#cpic").append(img).append(NameUnderPic);
         //$("body").append(createDiv);
