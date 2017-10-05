@@ -10,11 +10,11 @@ $('.hide2').css("display", "none");
 // });
 
 $('#try').on("click",function(){
-
+	$("#upic").empty();
+    $("#cpic").empty();
 	$('.hide2').css("display", "none");
 	$('.hide1').css('display',"inline");
-    $("#upic").empty();
-    $("#cpic").empty();
+    
     $("#comic-images").empty();
     $(".profile-pic").html("<img src='assets/images/profile.gif'>");
 
