@@ -254,27 +254,42 @@ $(document).ready(function(){
 													var theMatchesNames = [];
 													var theMatchesEmoRate = [];
 
-													// LOOP through all the keys in "MarvelChar"
-													for (k =0; k < theKeys.length; k++){
+													//Make a function to loop throught the database and return all characters that share the user's strongest emotion
+													
+														function matchNamesEmos(theKeys){
+															// LOOP through all the keys in "MarvelChar"
+															for (k =0; k < theKeys.length; k++){
 
-														// define the current key at the index
-														var aSingleKey = theKeys[k];
+																// define the current key at the index
+																var aSingleKey = theKeys[k];
 
-														//Define the emotion at each key/character
-														var emotionInFB = allDataObj[aSingleKey].Emotion;
+																//Define the emotion at each key/character
+																var emotionInFB = allDataObj[aSingleKey].Emotion;
 
-														// If the emotion at the key/character, matches the user's emotion...
-														if (emotionInFB ==emotionToMatch){
+																// If the emotion at the key/character, matches the user's emotion...
+																if (emotionInFB ==emotionToMatch){
 
-															// store the name of the character in "theMatchesNames" ...
-															theMatchesNames.push(allDataObj[aSingleKey].Name);
+																	// store the name of the character in "theMatchesNames" ...
+																	theMatchesNames.push(allDataObj[aSingleKey].Name);
 
-															// and store the emotionRating in the "theMatchesEmoRate"
-															theMatchesEmoRate.push(allDataObj[aSingleKey].EmoRate);
+																	// and store the emotionRating in the "theMatchesEmoRate"
+																	theMatchesEmoRate.push(allDataObj[aSingleKey].EmoRate);
 
-														} //end of IF
+																} //end of IF
 
-													} // end of FOR
+															} // end of FOR
+														} //end of matchNamesEmos();
+
+														// Run the function using the Keys from the database
+															matchNamesEmos(theKeys);
+
+															//If no matches were found, randomly select an emotion for the user and find another match
+															if (theMatchesNames.length ==0){
+																emotionToMatch = potentialEmotions[Math.floor(Math.random()*8)];
+																matchNamesEmos(theKeys);
+															} //end of If
+														// 
+													//End of finding a character
 
 													// Get the Index of the closest character match using "closestMatch"
 													// the inputs should be the user's emotion-rating ("numToMatch")
