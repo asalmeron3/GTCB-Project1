@@ -137,6 +137,11 @@ $(document).ready(function(){
 
 						    //state the type of request. For Face++, the type is "POST"
 						    type: 'POST',
+						    statusCode: {
+        						400: function() {
+						         	dispModal("We could not detect your face. Please try another photo.")
+						        }
+						    },
 
 						    //prevent JAVASCRIPT from trying to find the contentType and from processingData on the file
 						    contentType: false,
@@ -174,8 +179,13 @@ $(document).ready(function(){
 									$.ajax({
 
 									    url: queryURL2,
-									    type: 'POST'
-									  
+									    type: 'POST',
+									    statusCode: {
+			        						400: function() {
+									         	dispModal("We could not analyze your face. Please try another photo.")
+									        }
+									    }
+																			  
 										}).done(function(response2){
 
 											//Make an array of strings of the seven (7) emotions Face++ Rates. This is for indexing later

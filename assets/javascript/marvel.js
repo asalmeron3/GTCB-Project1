@@ -13,6 +13,7 @@ function displayMarvelCharacter(nameMatch) {
     $.ajax({
         url: queryURL,
         method: "GET"
+        
     }).done(function(response) {
         console.log(response);
         var name = response.data.results["0"].name;
@@ -40,6 +41,7 @@ function displayMarvelCharacter(nameMatch) {
         $.ajax({
             url: comicURL,
             method: "GET"
+
         }).done(function(secondResponse) {
             console.log(secondResponse);
             // var innerDiv = $("<div>");
