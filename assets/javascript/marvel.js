@@ -31,7 +31,7 @@ function displayMarvelCharacter(nameMatch) {
         //p.append(img);
         //createDiv.append(p);
         var NameUnderPic = $("<div>");
-        NameUnderPic.html("<a href='"+ charStats+ "'>" +"<h2>"+ name+"</h2>" +"</a>");
+        NameUnderPic.html("<a href='"+ charStats+ "' target = '_blank'>" +"<h2>"+ name+"</h2>" +"</a>");
         // $("#character-name").;
         $("#backgroundStory").html(story);
         $("#cpic").append(img).append(NameUnderPic);
@@ -54,7 +54,7 @@ function displayMarvelCharacter(nameMatch) {
                 var comicTitle = secondResponse.data.results[x].title;
                 var summary = secondResponse.data.results[x].description;
                 // var innerImg = $("<img>").attr("src", comicImage + ".jpg");
-                innerDiv.html("<a href ='" + hyperLink + "'><img src='"+ comicImage + ".jpg'" +"></a>" );
+                innerDiv.html("<a href ='" + hyperLink + "' target = '_blank'><img src='"+ comicImage + ".jpg'" +"></a>" );
 
                 // innerDiv.append(innerImg);
                 pTwo.append(comicTitle);
