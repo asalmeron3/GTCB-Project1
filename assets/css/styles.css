@@ -151,6 +151,8 @@ li {
 
 #testingPhoto {
     display: none;
+    max-height:4096px;
+    max-width:4096px;
 }
 
 .collapsible-body {
