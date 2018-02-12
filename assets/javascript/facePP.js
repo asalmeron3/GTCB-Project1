@@ -40,7 +40,6 @@
 //___________________________________________________________//
 
 
-
 $(document).ready(function(){
 
 	//-------------Once the user has Submitted A Photo-----------//
@@ -104,7 +103,7 @@ $(document).ready(function(){
 
 	  						}
 
-	  						reader.readAsDataURL(convertUserUpload);
+	  						reader.readAsBinaryString(convertUserUpload);
 	  					//______________________________________//
 
 
