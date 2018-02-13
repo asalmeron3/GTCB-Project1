@@ -31,12 +31,13 @@ function displayMarvelCharacter(nameMatch) {
         var img = $("<img>").attr("src", thumbnail + ".jpg");
         //p.append(img);
         //createDiv.append(p);
-        var NameUnderPic = $("<div>");
+        var NameUnderPic = $("<div>").attr("id","marvelname");
         NameUnderPic.html("<a href='"+ charStats+ "' target = '_blank'>" +"<h2>"+ name+"</h2>" +"</a>");
         // $("#character-name").;
         $("#backgroundStory").html(story);
-        $("#cpic").append(img).append(NameUnderPic);
         //$("body").append(createDiv);
+        $("#cpic").append(img).append(NameUnderPic);
+
         var comicURL = "https://gateway.marvel.com:443/v1/public/characters/" + characterId + "/comics?limit=8&ts=" + ts + "&apikey=" + apiKey + "&hash=" + passhash;
         $.ajax({
             url: comicURL,

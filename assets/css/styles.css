@@ -73,9 +73,11 @@ section {
 #cpic {
     border: 5px solid black;
     margin: auto;
-    height: 500px;
 }
+#rowPage1{
+    padding-top: 25px;
 
+}
 
 /*typography*/
 
@@ -156,11 +158,15 @@ li {
 .collapsible-body {
     background-color: white;
 }
-
-img {
+img{
     max-width: 100%;
     max-height: 100%;
+    margin: auto;
 }
+/*#ImagePage1 {
+    max-width: 100%;
+    max-height: 100%;
+}*/
 
 #comicBook {
     display: inline-table;
@@ -189,8 +195,12 @@ img {
     display: block;
     margin: 0 auto;
 }
-
-
+/*#UserPicDiv,
+#MarvelNameAndPic{
+   display: inline-block;
+}*/
+/*#marvelname{display: inline-block;}
+*/
 /*======
 img {
     height: 200px;
