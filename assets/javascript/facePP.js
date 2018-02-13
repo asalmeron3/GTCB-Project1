@@ -434,7 +434,7 @@ function fppDetect()  {
 		})
 
 		// When the user clicks anywhere outside of the modal-content, close the modal
-		$(w ow).on("click",function(event) {
+		$(window).on("click",function(event) {
 		    if (event.target == modal) {
 		        modal.style.display = "none";
 		    }
@@ -444,5 +444,4 @@ function fppDetect()  {
 
 
 //---------------------------End of facePP.js----------------------------//
-
 
