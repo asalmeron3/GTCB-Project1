@@ -415,34 +415,34 @@ function fppDetect()  {
 					// end of comment before first Ajax call
 					
 }
-// //----A function takes in a string to display via a modal ----//
-// 	function dispModal(messToDisp){
+//----A function takes in a string to display via a modal ----//
+	function dispModal(messToDisp){
 
-// 		// Get the modal from the HTML doc
-// 		var modal = document.getElementById('myModal');
+		// Get the modal from the HTML doc
+		var modal = document.getElementById('myModal');
 
-// 		//Update the paragraph in the modal to include the input-string "messToDisp"
-// 		$(".TellUser").html(messToDisp);
+		//Update the paragraph in the modal to include the input-string "messToDisp"
+		$(".TellUser").html(messToDisp);
 
-// 		// Display the entire modal to "block" the DOM
-// 		modal.style.display = "block";
-
-
-// 		// When the user clicks on (x) inside modal-content, close the modal
-// 		$(".close").on("click", function() {
-// 		    modal.style.display = "none";
-// 		})
-
-// 		// When the user clicks anywhere outside of the modal-content, close the modal
-// 		$(w ow).on("click",function(event) {
-// 		    if (event.target == modal) {
-// 		        modal.style.display = "none";
-// 		    }
-// 		})
-// 	} //end of dispModal()
-// //_________________________________________________________//
+		// Display the entire modal to "block" the DOM
+		modal.style.display = "block";
 
 
-// //---------------------------End of facePP.js----------------------------//
+		// When the user clicks on (x) inside modal-content, close the modal
+		$(".close").on("click", function() {
+		    modal.style.display = "none";
+		})
+
+		// When the user clicks anywhere outside of the modal-content, close the modal
+		$(w ow).on("click",function(event) {
+		    if (event.target == modal) {
+		        modal.style.display = "none";
+		    }
+		})
+	} //end of dispModal()
+//_________________________________________________________//
+
+
+//---------------------------End of facePP.js----------------------------//
 
 
