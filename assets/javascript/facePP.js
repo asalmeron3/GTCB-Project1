@@ -39,7 +39,10 @@
 		// be him here...yes WE KNOW that's a DC Character
 //___________________________________________________________//
 
-
+var dataurl;
+var file;
+var file2;
+var userPhoto;
 
 $(document).ready(function(){
 
@@ -79,56 +82,103 @@ $(document).ready(function(){
 
 		   	// //If the user submitted an acceptable file type -----//
 				else {
+					$("#testingPhoto").ready(ResizeImage(userUpload));
 
-					
-					//----------------Format image file data---------/
-
-						//Get the first file from the files submitted (should only be 1 file)
-						var convertUserUpload = userUpload[0];
-
-
-						// ----------For Displaying on DOM--------//
-
-							//define a variable to create an image
-							var userPhoto = $("<img>");
-
-							//read the image-file with a new FileReader
-							var reader = new FileReader();
-
-							// Do some magic...
-	  						reader.onload = function(event){
-	  							var source = event.target.result;
-
-	  							// add the source attribute to the img tag
-								userPhoto.attr("src",source);
-
-	  						}
-
-	  						reader.readAsDataURL(convertUserUpload);
-	  					//______________________________________//
-
-
-	  					//-------+------For FacePP----------------//
-
-							//initialize/creat a variable that will contain form data. This data should be 
-							//binary data that Face++ needs in order to detect/analayse the photo
-							var file = new FormData();
-
-							//append the name of the parameter "image_file" to your binary data
-							file.append("image_file", convertUserUpload);
-
-							// "file" will be the DATA we send Face++ in the ajax call
-						//________________________________________//
-					//________________________________________________//
 				
 
 
-					//----------the FIRST API Request for FACE++------///
+					
+				}// End of ELSE (from clicking submit)
+			// end of comment before ELSE//
+		}); // End of the user click
+	// end of comment before user click
+});	//End of (document).ready()//
+
+function ResizeImage(userUpload) {
+	var files = userUpload
+     file = files[0];
+
+    // Create an image
+    var img = document.createElement("img");
+    // Create a file reader
+    var reader = new FileReader();
+    // Set the image once loaded into file reader
+    reader.onload = function(e) {
+            img.src = e.target.result;
+            userPhoto = $("<img>");
+            userPhoto.attr("src", e.target.result);
+
+            var canvas = document.createElement("canvas");
+            //var canvas = $("<canvas>", {"id":"testing"})[0];
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+
+            var MAX_WIDTH = 400;
+            var MAX_HEIGHT = 400;
+            var width = img.width;
+            var height = img.height;
+
+            if (width > height) {
+                if (width > MAX_WIDTH) {
+                    height *= MAX_WIDTH / width;
+                    width = MAX_WIDTH;
+                }
+            } else {
+                if (height > MAX_HEIGHT) {
+                    width *= MAX_HEIGHT / height;
+                    height = MAX_HEIGHT;
+                }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+
+            dataurl = canvas.toDataURL("image/png"); 
+            // dataurl = encodeURIComponent(dataurl);
+            // var dataurl2 = dataurl.split("data:image/jpeg;base64,")[1]; 
+            // dataurl = dataurl2;
+            file2 = new FormData();
+
+			//append the name of the parameter "image_file" to your binary data
+			file2.append("image_file", dataURItoBlob(dataurl));
+    		fppDetect();
+        }
+        // Load files into file reader
+    reader.readAsDataURL(file);
+  
+}
+function dataURItoBlob(dataURI) {
+    // convert base64 to raw binary data held in a string
+    // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+    var byteString = atob(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to an ArrayBuffer
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    //Old Code
+    //write the ArrayBuffer to a blob, and you're done
+    //var bb = new BlobBuilder();
+    //bb.append(ab);
+    //return bb.getBlob(mimeString);
+
+    //New Code
+    return new Blob([ab], {type: mimeString});
+}
+function fppDetect()  {
+	//----------the FIRST API Request for FACE++------///
 
 						//compose the URL for ajax to request api data from FACE++. "Detect" will find
 						//the face and assign that face a "token". The token is needed to later analyze
 						var queryURL = detectLink+ "api_secret=" + API_SECRET+ "&api_key="+API_KEY;
-
+						console.log(queryURL)
 						//Configure your First Ajax request
 						$.ajax({
 
@@ -139,17 +189,16 @@ $(document).ready(function(){
 						    type: 'POST',
 						    statusCode: {
         						400: function() {
-						         	dispModal("We could not detect your face. Please try another photo.")
+						         	console.log("We could not detect your face. Please try another photo.")
 						        }
 						    },
 
 						    //prevent JAVASCRIPT from trying to find the contentType and from processingData on the file
 						    contentType: false,
 						    processData: false,
-
 						    //give your ajax request data it needs in order to fulfill the request for Face++ ...
 						    //the "data" is the image the use uploaded with the "image_file" parameter included
-						    data:  file
+						    data:  file2
 
 							}).done(function(response){
 								//Upon getting your first request from Face++, prepare to make a SECOND request...
@@ -157,7 +206,7 @@ $(document).ready(function(){
 
 								if (response.faces[0] == undefined) {
 									var say = "This Photo is not Superhero worthy! Please try a different photo.";
-									dispModal(say);
+									console.log(say);
 								}
 
 								else{
@@ -173,9 +222,9 @@ $(document).ready(function(){
 									var features ="&return_landmark=1&return_attributes=gender,age,smiling,emotion"; 
 
 									//add the features to the URL
-									queryURL2 = queryURL2 + features;	
-
-									//Configure your SECOND Ajax request to ANALYZE the face. Type is still "POST"
+									queryURL2 = queryURL2 + features;
+									console.log(queryURL2);
+									
 									$.ajax({
 
 									    url: queryURL2,
@@ -364,41 +413,36 @@ $(document).ready(function(){
 							}) // End of .done(response)	
 						// End of first Ajax call
 					// end of comment before first Ajax call
-				}// End of ELSE (from clicking submit)
-			// end of comment before ELSE//
-		}); // End of the user click
-	// end of comment before user click
-});	//End of (document).ready()//
+					
+}
+// //----A function takes in a string to display via a modal ----//
+// 	function dispModal(messToDisp){
+
+// 		// Get the modal from the HTML doc
+// 		var modal = document.getElementById('myModal');
+
+// 		//Update the paragraph in the modal to include the input-string "messToDisp"
+// 		$(".TellUser").html(messToDisp);
+
+// 		// Display the entire modal to "block" the DOM
+// 		modal.style.display = "block";
 
 
-//----A function takes in a string to display via a modal ----//
-	function dispModal(messToDisp){
+// 		// When the user clicks on (x) inside modal-content, close the modal
+// 		$(".close").on("click", function() {
+// 		    modal.style.display = "none";
+// 		})
 
-		// Get the modal from the HTML doc
-		var modal = document.getElementById('myModal');
-
-		//Update the paragraph in the modal to include the input-string "messToDisp"
-		$(".TellUser").html(messToDisp);
-
-		// Display the entire modal to "block" the DOM
-		modal.style.display = "block";
-
-
-		// When the user clicks on (x) inside modal-content, close the modal
-		$(".close").on("click", function() {
-		    modal.style.display = "none";
-		})
-
-		// When the user clicks anywhere outside of the modal-content, close the modal
-		$(window).on("click",function(event) {
-		    if (event.target == modal) {
-		        modal.style.display = "none";
-		    }
-		})
-	} //end of dispModal()
-//_________________________________________________________//
+// 		// When the user clicks anywhere outside of the modal-content, close the modal
+// 		$(w ow).on("click",function(event) {
+// 		    if (event.target == modal) {
+// 		        modal.style.display = "none";
+// 		    }
+// 		})
+// 	} //end of dispModal()
+// //_________________________________________________________//
 
 
-//---------------------------End of facePP.js----------------------------//
+// //---------------------------End of facePP.js----------------------------//
 
 
